@@ -1,0 +1,604 @@
+/* Google Fonts Imports */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+
+/* Color Variables */
+:root {
+    --primary-color: #8B735C;
+    --secondary-color: #5C4A3E;
+    --beige-light: #fdfae7;
+    --beige-border: #e0c29f;
+    --progress-bar-color: #f1c40f; /* لون شريط التقدم */
+    --announcement-bg: #34495e; /* لون شريط الإعلان */
+}
+
+/* Dark mode variables */
+[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #f0f0f0;
+    --text-secondary: #cccccc;
+    --card-bg: #333333;
+    --border-color: #444444;
+}
+
+/* Light mode variables */
+[data-theme="light"] {
+    --bg-primary: #fcfcfc;
+    --bg-secondary: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --card-bg: #ffffff;
+    --border-color: #e0c29f;
+}
+
+/* Base Body Styles */
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
+    /* هذا هو السطر المهم الذي يمنع التمرير الأفقي */
+    **overflow-x: hidden;**     scroll-behavior: smooth;
+}
+
+/* Watermark Background Logo */
+body::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; /* يمكنك تعديل هذا الحجم */
+    height: auto;
+    background-image: url('midad.png'); /* تأكد أن هذا هو مسار الصورة الصحيح لشعارك */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.05; /* هذا يجعلها خفيفة جداً كعلامة مائية. يمكنك تعديل القيمة (مثال: 0.10 لتكون أوضح قليلاً) */
+    z-index: -1; /* يضمن أنها تظهر خلف كل المحتوى */
+    pointer-events: none; /* يضمن أنها لا تتداخل مع تفاعل المستخدم مع العناصر الأخرى */
+}
+
+/* Moving Banner */
+.moving-banner {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 10px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.moving-text {
+    display: inline-block;
+    white-space: nowrap;
+    animation: moveLeft 15s linear infinite;
+    padding-right: 100%;
+}
+
+@keyframes moveLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* --- New Styles and Enhancements --- */
+
+/* Announcement Bar */
+.announcement-bar {
+    background-color: var(--announcement-bg);
+    color: white;
+    text-align: center;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    position: sticky;
+    top: 0;
+    z-index: 100; /* Make sure it's above other content */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Scroll Progress Bar */
+#progressBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px; /* Thickness of the bar */
+    background: var(--progress-bar-color); /* Bright color for visibility */
+    width: 0%;
+    z-index: 101; /* Above announcement bar */
+}
+
+/* Sticky Header */
+.main-header {
+    position: sticky;
+    top: 38px; /* Offset by the height of the announcement bar */
+    z-index: 99; /* Below progress bar, above main content */
+    background-color: #2a2a2a; /* Ensure header has a background color when sticky */
+}
+
+/* Hover Effects for Navbar Links */
+nav ul li .nav-link { /* Applied to <a> and <summary> for consistent hover */
+    color: white; /* Default color */
+    position: relative;
+    padding: 0.25rem 0.5rem; /* Add some padding */
+    transition: color 0.3s ease, transform 0.3s ease; /* For icon scaling */
+}
+
+nav ul li .nav-link:hover {
+    color: var(--primary-color); /* Change text color on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Underline effect for nav links */
+nav ul li .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; /* Adjust position below link */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0%;
+    height: 2px;
+    background-color: var(--progress-bar-color); /* Use progress bar color for consistency */
+    transition: width 0.3s ease-out;
+}
+
+nav ul li .nav-link:hover::after {
+    width: 100%; /* Expand underline on hover */
+}
+
+/* Enhanced Section Icons */
+.section-icon {
+    font-size: 3.5rem; /* Slightly larger */
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    opacity: 0.9;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.section-card:hover .section-icon {
+    transform: scale(1.1) rotate(5deg); /* Grow and slightly rotate on card hover */
+    color: var(--secondary-color); /* Change icon color on hover */
+}
+
+/* New class for icons that should maintain primary color and not change on hover */
+.section-icon-colored {
+    font-size: 3.5rem; /* Slightly larger */
+    color: var(--primary-color); /* Always keep primary color */
+    margin-bottom: 1rem;
+    opacity: 0.9;
+    transition: transform 0.3s ease; /* Only scale, no color change */
+}
+
+.section-card:hover .section-icon-colored {
+    transform: scale(1.1) rotate(5deg); /* Grow and slightly rotate on card hover */
+}
+
+
+/* Theme Toggle Button and Scroll-to-Top Button */
+.theme-toggle, .scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.theme-toggle {
+    left: 20px;
+}
+
+.scroll-to-top {
+    right: 20px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.theme-toggle:hover, .scroll-to-top:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth transitions for general elements */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Hover effects */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Leadership Icon */
+.leadership-icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    position: relative;
+    margin-left: 8px;
+}
+
+.leadership-icon::before {
+    content: '★';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Custom styles for tables */
+.didactic-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.didactic-table:hover {
+    transform: scale(1.01);
+}
+
+.didactic-table th, .didactic-table td {
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    text-align: right;
+}
+
+.didactic-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+[data-theme="dark"] .didactic-table tr:nth-child(even) {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="light"] .didactic-table tr:nth-child(even) {
+    background-color: var(--beige-light);
+}
+
+.didactic-table td {
+    background-color: var(--card-bg);
+}
+
+.section-card {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* More prominent initial shadow */
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section-card:hover {
+    transform: translateY(-5px); /* Slightly more lift */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25); /* More prominent shadow on hover */
+}
+
+.section-title {
+    font-family: 'Amiri', serif;
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--secondary-color);
+    transition: width 0.3s ease;
+}
+
+.section-card:hover .section-title::after {
+    width: 100%;
+}
+
+.sub-section-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.card-item {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.card-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 0.75rem;
+}
+
+/* Navigation adjustments (retained) */
+nav ul li {
+    margin: 0 0.5rem;
+}
+
+nav ul li:first-child {
+    margin-right: 1rem;
+}
+
+/* Mobile Menu Styles */
+#mobile-menu {
+    display: none;
+    background-color: var(--primary-color);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+#mobile-menu.active {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        display: none;
+    }
+    #menu-btn {
+        display: block;
+        color: white;
+    }
+    /* Adjust sticky header position for mobile menu */
+    .main-header {
+        top: 0; /* Remove offset on smaller screens where announcement bar might not be sticky or is smaller */
+    }
+}
+
+@media (min-width: 769px) {
+    #menu-btn {
+        display: none;
+    }
+}
+
+/* Social Icons styles */
+.header-social-icons a {
+    font-size: 1.8rem;
+    margin-left: 0.5rem;
+    color: white;
+    transition: color 0.3s ease-in-out, transform 0.3s ease;
+}
+
+.header-social-icons a:hover {
+    transform: scale(1.2);
+}
+
+.header-social-icons a.facebook:hover {
+    color: #3b5998;
+}
+
+.header-social-icons a.whatsapp:hover {
+    color: #25d366;
+}
+
+.about-us-social-icons a {
+    font-size: 2.5rem;
+    margin: 0 0.75rem;
+    transition: all 0.3s ease;
+    color: var(--primary-color);
+}
+
+.about-us-social-icons a:hover {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.about-us-social-icons a.facebook:hover {
+    color: #3b5998;
+}
+
+.about-us-social-icons a.whatsapp:hover {
+    color: #25d366;
+}
+
+/* Dropdown styles for details/summary (Accordion-like) */
+@media (min-width: 769px) {
+    nav ul li details ul {
+        display: none;
+        position: absolute;
+        background-color: #2a2a2a;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        border-radius: 0.5rem;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        list-style: none;
+        padding: 0;
+    }
+    nav ul li details[open] ul {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    #mobile-menu details ul {
+        position: static;
+        width: auto;
+        box-shadow: none;
+        background-color: transparent;
+        margin-top: 0;
+        opacity: 1;
+        transform: none;
+        display: block;
+    }
+}
+
+/* Styles for links inside details/summary lists */
+nav ul li details ul a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: right;
+    transition: background-color 0.3s;
+}
+
+nav ul li details ul a:hover {
+    background-color: var(--secondary-color);
+    border-radius: 0.5rem;
+}
+
+/* Contact form styles */
+.contact-form input,
+.contact-form textarea {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(139, 115, 92, 0.1);
+}
+
+/* General text color for dark mode to ensure readability */
+[data-theme="dark"] .text-gray-700 {
+    color: var(--text-secondary);
+}
+[data-theme="dark"] .text-gray-600 {
+    color: var(--text-secondary);
+}
+[data-theme="dark"] .section-title {
+    color: var(--text-primary);
+}
+[data-theme="dark"] .sub-section-title {
+    color: var(--primary-color);
+}
+
+/* Adjustments for header logo */
+header .flex.items-center.space-x-2.space-x-reverse img {
+    height: 70px;
+    width: 70px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+    object-fit: contain;
+    border: 2px solid var(--primary-color);
+}
+
+/* Specific colors for text and icons on cards */
+.card-item .card-title {
+    color: var(--primary-color);
+}
+.card-item i {
+    color: var(--primary-color);
+}
+.arabic-icon { color: #8B735C; }
+.math-icon { color: #2980b9; }
+.french-icon { color: #c0392b; }
+
+/* Spinner for loading button */
+.loading {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #fff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
