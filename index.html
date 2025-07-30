@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-M">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مداد للتربية والتعليم</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,8 +17,6 @@
             --beige-border: #e0c29f;
             --progress-bar-color: #f1c40f; /* لون شريط التقدم */
             --announcement-bg: #34495e; /* لون شريط الإعلان */
-            --highlight-bg: #ffe066; /* لون إبراز البحث */
-            --highlight-text: #333333; /* لون نص إبراز البحث */
         }
 
         /* Dark mode variables */
@@ -29,8 +27,6 @@
             --text-secondary: #cccccc;
             --card-bg: #333333;
             --border-color: #444444;
-            --highlight-bg: #a89432; /* Darker highlight for dark mode */
-            --highlight-text: #f0f0f0;
         }
 
         /* Light mode variables */
@@ -72,79 +68,46 @@
             pointer-events: none;
         }
 
-        /* Moving Banner - Now for a welcome message */
+        /* Moving Banner */
         .moving-banner {
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 10px 0;
             overflow: hidden;
             position: relative;
-            text-align: center; /* Center the static text initially */
         }
 
-        .moving-text-wrapper {
+        .moving-text {
             display: inline-block;
             white-space: nowrap;
-            /* Animation applied to this wrapper */
-            animation: moveText 15s linear infinite; 
-            padding-right: 100%; /* Ensures text moves fully off-screen */
-            box-sizing: content-box; /* Ensures padding doesn't affect width for animation */
+            animation: moveLeft 15s linear infinite;
+            padding-right: 100%;
         }
 
-        @keyframes moveText {
-            0% { transform: translateX(100%); } /* Start from right (off-screen) */
-            100% { transform: translateX(-100%); } /* Move to left (off-screen) */
+        @keyframes moveLeft {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
         }
 
         /* --- New Styles and Enhancements --- */
 
-        /* Announcement Bar (now with search) */
+        /* Announcement Bar */
         .announcement-bar {
             background-color: var(--announcement-bg);
             color: white;
+            text-align: center;
             padding: 8px 15px;
             font-size: 0.9rem;
             position: sticky;
             top: 0;
             z-index: 100;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            display: flex; /* Use flexbox for alignment */
-            justify-content: center; /* Center content */
-            align-items: center;
-            gap: 10px; /* Space between elements */
-            flex-wrap: wrap; /* Allow wrapping on small screens */
         }
 
-        .announcement-bar .search-container {
-            display: flex;
-            align-items: center;
-            background-color: white;
-            border-radius: 20px; /* Pill shape */
-            overflow: hidden;
-        }
-
-        .announcement-bar .search-input {
-            border: none;
-            padding: 8px 15px;
-            font-size: 0.9rem;
-            width: 200px; /* Adjust as needed */
-            outline: none;
-            color: #333;
-        }
-
-        .announcement-bar .search-button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .announcement-bar .search-button:hover {
-            background-color: var(--secondary-color);
-        }
-        
         /* Scroll Progress Bar */
         #progressBar {
             position: fixed;
@@ -159,23 +122,9 @@
         /* Sticky Header */
         .main-header {
             position: sticky;
-            top: 41px; /* Offset by the height of the announcement bar (approx. 38px + 3px for progress bar) */
+            top: 38px; /* Offset by the height of the announcement bar */
             z-index: 99;
             background-color: #2a2a2a;
-        }
-
-        /* Highlight Search Results */
-        .highlight {
-            background-color: var(--highlight-bg);
-            color: var(--highlight-text);
-            padding: 2px 4px;
-            border-radius: 3px;
-            animation: highlightFade 1s ease-out; /* Optional: fade out highlight */
-        }
-
-        @keyframes highlightFade {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         /* Hover Effects for Navbar Links */
@@ -403,7 +352,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 0%;
+            width: 0;
             height: 2px;
             background: var(--secondary-color);
             transition: width 0.3s ease;
@@ -443,7 +392,7 @@
             margin-bottom: 0.75rem;
         }
 
-        /* Navigation adjustments */
+        /* Navigation adjustments (retained) */
         nav ul li {
             margin: 0 0.5rem;
         }
@@ -488,26 +437,6 @@
             /* Adjust sticky header position for mobile menu */
             .main-header {
                 top: 0;
-            }
-            .announcement-bar .search-input {
-                width: 100%;
-            }
-            .announcement-bar .search-container {
-                flex-grow: 1;
-            }
-            /* Adjust moving text wrapper for mobile */
-            .moving-text-wrapper {
-                animation: none; /* Disable moving text on small screens */
-                padding-right: 0;
-            }
-            .announcement-bar > span {
-                display: block; /* Make it a block element to take full width */
-                text-align: center;
-                margin-bottom: 10px;
-            }
-            .announcement-bar {
-                flex-direction: column;
-                align-items: stretch;
             }
         }
 
@@ -556,7 +485,7 @@
             color: #25d366;
         }
 
-        /* Dropdown styles for details/summary */
+        /* Dropdown styles for details/summary (Accordion-like) */
         @media (min-width: 769px) {
             nav ul li details ul {
                 display: none;
@@ -661,9 +590,6 @@
         .arabic-icon { color: #8B735C; }
         .math-icon { color: #2980b9; }
         .french-icon { color: #c0392b; }
-        .articles-icon { color: #6C5B7B; } /* New color for articles icon */
-        .tips-icon { color: #E5BB4B; } /* New color for tips icon */
-
 
         /* Spinner for loading button */
         .loading {
@@ -683,7 +609,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* --- Tab Styles --- */
+        /* --- Tab Styles (from previous step) --- */
         .tabs-container {
             width: 100%;
             margin-top: 2rem;
@@ -749,7 +675,7 @@
             }
         }
         
-        /* --- Accordion Styles --- */
+        /* --- New Accordion Styles --- */
         .accordion-item {
             border: 1px solid var(--border-color);
             border-radius: 0.75rem;
@@ -819,13 +745,10 @@
 <body data-theme="light" class="flex flex-col min-h-screen">
     <div id="progressBar"></div>
 
-    <div class="announcement-bar">
-        <span class="moving-text-wrapper">مرحباً بكم في مداد للتربية والتعليم - منصتكم الشاملة للتعليم الابتدائي ✨ </span>
-        <div class="search-container">
-            <input type="text" id="searchInput" class="search-input" placeholder="ابحث في الموقع...">
-            <button id="searchButton" class="search-button">
-                <i class="fas fa-search"></i>
-            </button>
+    <div class="moving-banner">
+        <div class="moving-text">
+            <span>مرحباً بكم في مداد للتربية والتعليم - منصتكم الشاملة للتعليم الابتدائي ✨ </span>
+            <span>مرحباً بكم في مداد للتربية والتعليم - منصتكم الشاملة للتعليم الابتدائي ✨ </span>
         </div>
     </div>
 
@@ -885,23 +808,8 @@
                         </details>
                     </li>
 
-                    <li class="relative">
-                        <details class="dropdown">
-                            <summary class="nav-link flex items-center cursor-pointer">
-                                <i class="fas fa-pen-nib ml-1"></i> مقالات تربوية <i class="fas fa-chevron-down mr-1 text-xs"></i>
-                            </summary>
-                            <ul>
-                                <li><a href="#articles-section" data-tab-goto="general-tips-tab" class="nav-link">
-                                    <i class="fas fa-lightbulb ml-1 tips-icon"></i> نصائح عامة
-                                </a></li>
-                                <li><a href="#articles-section" data-tab-goto="didactic-articles-tab" class="nav-link">
-                                    <i class="fas fa-feather-alt ml-1 articles-icon"></i> مقالات ديداكتيكية وأدبية
-                                </a></li>
-                            </ul>
-                        </details>
-                    </li>
-
                     <li><a href="#digital-resources-section" class="nav-link" data-accordion-goto="digital-resources-section"><i class="fas fa-laptop ml-1"></i> موارد رقمية</a></li>
+                    <li><a href="#general-tips-section" class="nav-link" data-accordion-goto="general-tips-section"><i class="fas fa-lightbulb ml-1"></i> نصائح عامة</a></li>
                     <li><a href="#resources-section" class="nav-link" data-accordion-goto="resources-section"><i class="fas fa-folder-open ml-1"></i> الموارد</a></li>
                     <li><a href="#about-us-section" class="nav-link" data-accordion-goto="about-us-section"><i class="fas fa-info-circle ml-1"></i> من نحن</a></li>
                     <li><a href="#contact-us-section" class="nav-link"><i class="fas fa-envelope ml-1"></i> اتصل بنا</a></li>
@@ -946,20 +854,16 @@
                 <li>
                     <details class="group">
                         <summary class="block px-4 py-2 hover:bg-[#5C4A3E] rounded-md cursor-pointer flex justify-between items-center">
-                            <span><i class="fas fa-pen-nib ml-1"></i> مقالات تربوية</span> <i class="fas fa-chevron-down text-xs group-open:rotate-180 transition-transform"></i>
+                            <span><i class="fas fa-laptop ml-1"></i> موارد رقمية</span> <i class="fas fa-chevron-down text-xs group-open:rotate-180 transition-transform"></i>
                         </summary>
                         <ul class="ml-4 mt-2 space-y-2">
-                            <li><a href="#articles-section" data-tab-goto="general-tips-tab" class="block px-4 py-2 hover:bg-[#5C4A3E] rounded-md">
-                                <i class="fas fa-lightbulb ml-1 tips-icon"></i> نصائح عامة
-                            </a></li>
-                            <li><a href="#articles-section" data-tab-goto="didactic-articles-tab" class="block px-4 py-2 hover:bg-[#5C4A3E] rounded-md">
-                                <i class="fas fa-feather-alt ml-1 articles-icon"></i> مقالات ديداكتيكية وأدبية
-                            </a></li>
+                            <li><a href="#digital-resources-section" class="block px-4 py-2 hover:bg-[#5C4A3E] rounded-md" data-accordion-goto="digital-resources-section">موارد عامة</a></li>
+                            <li><a href="#digital-resources-riada" class="block px-4 py-2 hover:bg-[#5C4A3E] rounded-md">تكوين الريادة <span class="leadership-icon"></span></a></li>
                         </ul>
                     </details>
                 </li>
 
-                <li><a href="#digital-resources-section" class="block px-4 py-2 hover:bg-[#5C4A3E] rounded-md" data-accordion-goto="digital-resources-section"><i class="fas fa-laptop ml-1"></i> موارد رقمية</a></li>
+                <li><a href="#general-tips-section" class="block px-4 py-2 hover:bg-[#5C4A3E] rounded-md" data-accordion-goto="general-tips-section"><i class="fas fa-lightbulb ml-1"></i> نصائح عامة</a></li>
                 <li><a href="#resources-section" class="block px-4 py-2 hover:bg-[#5C4A3E] rounded-md" data-accordion-goto="resources-section"><i class="fas fa-folder-open ml-1"></i> الموارد</a></li>
                 <li><a href="#about-us-section" class="block px-4 py-2 hover:bg-[#5C4A3E] rounded-md" data-accordion-goto="about-us-section"><i class="fas fa-info-circle ml-1"></i> من نحن</a></li>
                 <li><a href="#contact-us-section" class="block px-4 py-2 hover:bg-[#5C4A3E] rounded-md"><i class="fas fa-envelope ml-1"></i> اتصل بنا</a></li>
@@ -993,20 +897,6 @@
                     <i class="fas fa-font text-4xl mb-3 french-icon"></i>
                     <h4 class="card-title">اللغة الفرنسية</h4>
                     <p class="text-gray-600">اكتساب اللغة الأجنبية</p>
-                </a>
-            </div>
-
-            <h3 class="sub-section-title mt-6">المقالات التربوية</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <a href="#articles-section" data-tab-goto="general-tips-tab" class="card-item hover-lift text-center">
-                    <i class="fas fa-lightbulb text-4xl mb-3 tips-icon"></i>
-                    <h4 class="card-title">نصائح عامة</h4>
-                    <p class="text-gray-600">إرشادات قيمة للطلاب والأساتذة</p>
-                </a>
-                <a href="#articles-section" data-tab-goto="didactic-articles-tab" class="card-item hover-lift text-center">
-                    <i class="fas fa-feather-alt text-4xl mb-3 articles-icon"></i>
-                    <h4 class="card-title">مقالات ديداكتيكية وأدبية</h4>
-                    <p class="text-gray-600">تحليلات متعمقة ومواضيع أدبية</p>
                 </a>
             </div>
             
@@ -1222,53 +1112,6 @@
 
         ---
 
-        <section id="articles-section" class="tabs-container section-card fade-in">
-            <div class="text-center">
-                <i class="fas fa-pen-nib section-icon articles-icon"></i>
-            </div>
-            <h2 class="section-title">المقالات التربوية</h2>
-            <div class="tab-buttons">
-                <button class="tab-button active" data-tab="general-tips-tab"><i class="fas fa-lightbulb ml-1 tips-icon"></i> نصائح عامة</button>
-                <button class="tab-button" data-tab="didactic-articles-tab"><i class="fas fa-feather-alt ml-1 articles-icon"></i> مقالات ديداكتيكية وأدبية</button>
-            </div>
-
-            <div id="general-tips-tab-content" class="tab-content active">
-                <h3 class="sub-section-title mt-6">نصائح للاستعداد الجيد للامتحانات</h3>
-                <ul class="list-disc list-inside text-gray-700 text-lg mb-4 space-y-2">
-                    <li><strong>فهم المنهاج:</strong> اطلع جيداً على المنهاج الدراسي (يوليوز 2021) لفهم الأهداف والكفايات المطلوبة.</li>
-                    <li><strong>التخطيط للمراجعة:</strong> ضع جدولاً زمنياً للمراجعة يغطي جميع المواد.</li>
-                    <li><strong>المراجعة النشطة:</strong> لخص المعلومات، ارسم خرائط ذهنية، وحل التمارين بانتظام.</li>
-                    <li><strong>الامتحانات التجريبية:</strong> حل نماذج امتحانات سابقة للتعود على صيغة الأسئلة.</li>
-                    <li><strong>الراحة والتغذية:</strong> احرص على أخذ قسط كافٍ من النوم وتناول غذاء صحي.</li>
-                </ul>
-
-                <h3 class="sub-section-title mt-8">طرق التدريس والبيداغوجيات المستعملة في التعليم بالمغرب</h3>
-                <ul class="list-disc list-inside text-gray-700 text-lg mb-4 space-y-2">
-                    <li><strong>المقاربة بالكفايات:</strong> تركز على تمكين المتعلم من توظيف معارفه لحل وضعيات مشكلة.</li>
-                    <li><strong>البيداغوجيا الفارقية:</strong> تأخذ بعين الاعتبار الفروقات الفردية بين المتعلمين.</li>
-                    <li><strong>بيداغوجيا المشروع:</strong> تعتمد على إنجاز مشاريع تعليمية لتطبيق المعارف.</li>
-                    <li><strong>بيداغوجيا اللعب:</strong> استخدام الألعاب التعليمية كوسيلة للتحفيز.</li>
-                </ul>
-            </div>
-
-            <div id="didactic-articles-tab-content" class="tab-content">
-                <h3 class="sub-section-title mt-6">مقدمة لمقالاتنا المتخصصة</h3>
-                <p class="text-gray-700 text-lg leading-relaxed mb-4">
-                    هنا ستجدون مجموعة من المقالات المتعمقة التي تتناول جوانب مختلفة من ديداكتيك المواد التعليمية، بالإضافة إلى مواضيع أدبية تهدف إلى إثراء معرفتكم وتعزيز مهاراتكم اللغوية والأكاديمية.
-                </p>
-                <ul class="list-disc list-inside text-gray-700 text-lg mb-4 space-y-2">
-                    <li>**مقالات ديداكتيكية:** تحليل أحدث المناهج، استراتيجيات التدريس الفعال، وتقييم الأداء التعليمي.</li>
-                    <li>**مقالات أدبية:** دراسات في النصوص الأدبية، تحليل أساليب الكتابة، وتنمية الذائقة الفنية.</li>
-                    <li>**مواضيع خاصة:** نقاش حول دمج التكنولوجيا والذكاء الاصطناعي في العملية التعليمية.</li>
-                </ul>
-                <p class="text-gray-700 text-lg leading-relaxed mt-6">
-                    ترقبوا المزيد من المقالات الجديدة قريباً!
-                </p>
-            </div>
-        </section>
-
-        ---
-
         <details id="level4-section" class="accordion-item section-card fade-in">
             <summary>
                 <i class="fas fa-book-open"></i> ديداكتيك اللغة العربية - المستوى الرابع
@@ -1457,6 +1300,32 @@
 
         ---
 
+        <details id="general-tips-section" class="accordion-item section-card fade-in">
+            <summary>
+                <i class="fas fa-lightbulb"></i> نصائح عامة
+            </summary>
+            <div class="accordion-content">
+                <h3 class="sub-section-title mt-6">نصائح للاستعداد الجيد للامتحانات</h3>
+                <ul class="list-disc list-inside text-gray-700 text-lg mb-4 space-y-2">
+                    <li><strong>فهم المنهاج:</strong> اطلع جيداً على المنهاج الدراسي (يوليوز 2021) لفهم الأهداف والكفايات المطلوبة.</li>
+                    <li><strong>التخطيط للمراجعة:</strong> ضع جدولاً زمنياً للمراجعة يغطي جميع المواد.</li>
+                    <li><strong>المراجعة النشطة:</strong> لخص المعلومات، ارسم خرائط ذهنية، وحل التمارين بانتظام.</li>
+                    <li><strong>الامتحانات التجريبية:</strong> حل نماذج امتحانات سابقة للتعود على صيغة الأسئلة.</li>
+                    <li><strong>الراحة والتغذية:</strong> احرص على أخذ قسط كافٍ من النوم وتناول غذاء صحي.</li>
+                </ul>
+
+                <h3 class="sub-section-title mt-8">طرق التدريس والبيداغوجيات المستعملة في التعليم بالمغرب</h3>
+                <ul class="list-disc list-inside text-gray-700 text-lg mb-4 space-y-2">
+                    <li><strong>المقاربة بالكفايات:</strong> تركز على تمكين المتعلم من توظيف معارفه لحل وضعيات مشكلة.</li>
+                    <li><strong>البيداغوجيا الفارقية:</strong> تأخذ بعين الاعتبار الفروقات الفردية بين المتعلمين.</li>
+                    <li><strong>بيداغوجيا المشروع:</strong> تعتمد على إنجاز مشاريع تعليمية لتطبيق المعارف.</li>
+                    <li><strong>بيداغوجيا اللعب:</strong> استخدام الألعاب التعليمية كوسيلة للتحفيز.</li>
+                </ul>
+            </div>
+        </details>
+
+        ---
+
         <details id="resources-section" class="accordion-item section-card fade-in">
             <summary>
                 <i class="fas fa-folder-open"></i> الموارد اللازمة للاستعداد
@@ -1547,8 +1416,6 @@
             const themeIcon = document.getElementById('theme-icon');
             const contactForm = document.querySelector('.contact-form form');
             const progressBar = document.getElementById('progressBar');
-            const searchInput = document.getElementById('searchInput');
-            const searchButton = document.getElementById('searchButton');
 
             // Toggle mobile menu visibility
             menuBtn.addEventListener('click', () => {
@@ -1614,16 +1481,15 @@
             });
 
             // --- Tab Functionality ---
-            // Generic function to activate a tab within a given container
-            const activateTabInContainer = (tabId, containerElement) => {
-                const tabButtonsInContainer = containerElement.querySelectorAll('.tab-button');
-                const tabContentsInContainer = containerElement.querySelectorAll('.tab-content');
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
 
-                tabButtonsInContainer.forEach(btn => btn.classList.remove('active'));
-                tabContentsInContainer.forEach(content => content.classList.remove('active'));
+            const activateTab = (tabId) => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
 
-                const targetButton = containerElement.querySelector(`.tab-button[data-tab="${tabId}"]`);
-                const targetContent = containerElement.querySelector(`#${tabId}-content`);
+                const targetButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+                const targetContent = document.getElementById(`${tabId}-content`);
 
                 if (targetButton && targetContent) {
                     targetButton.classList.add('active');
@@ -1631,20 +1497,12 @@
                 }
             };
 
-            // Event listeners for general tab buttons (e.g., didactic subjects)
-            document.querySelectorAll('#didactic-subjects-section .tab-button').forEach(button => {
+            tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    activateTabInContainer(button.dataset.tab, document.getElementById('didactic-subjects-section'));
+                    const targetTabId = button.dataset.tab;
+                    activateTab(targetTabId);
                 });
             });
-
-            // Event listeners for articles tab buttons
-            document.querySelectorAll('#articles-section .tab-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    activateTabInContainer(button.dataset.tab, document.getElementById('articles-section'));
-                });
-            });
-
 
             // --- Accordion Functionality ---
             const accordionDetails = document.querySelectorAll('.accordion-item');
@@ -1654,6 +1512,8 @@
                 details.addEventListener('toggle', (event) => {
                     if (details.open) {
                         accordionDetails.forEach(otherDetails => {
+                            // Ensure the open/close state is correctly reflected for the clicked accordion
+                            // and close others only if they are different and open
                             if (otherDetails !== details && otherDetails.open) {
                                 otherDetails.open = false;
                             }
@@ -1669,17 +1529,17 @@
                     const targetElement = document.getElementById(targetId);
 
                     if (targetElement) {
-                        e.preventDefault();
+                        e.preventDefault(); // Prevent default anchor jump
 
                         // If the link is meant to go to a specific tab
                         if (this.hasAttribute('data-tab-goto')) {
                             const tabToActivateId = this.getAttribute('data-tab-goto');
-                            const parentSectionHref = this.getAttribute('href').split('#')[1]; // Get section ID from href (e.g. articles-section or didactic-subjects-section)
-                            const parentTabsSection = document.getElementById(parentSectionHref);
+                            activateTab(tabToActivateId);
                             
-                            if (parentTabsSection) {
-                                activateTabInContainer(tabToActivateId, parentTabsSection);
-                                parentTabsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            // Scroll to the section containing the tabs
+                            const tabsSection = document.getElementById('didactic-subjects-section');
+                            if (tabsSection) {
+                                tabsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                         } 
                         // If the link is meant to open a specific accordion item
@@ -1687,16 +1547,19 @@
                             const accordionToOpenId = this.getAttribute('data-accordion-goto');
                             const targetAccordion = document.getElementById(accordionToOpenId);
                             if (targetAccordion && targetAccordion.tagName === 'DETAILS') {
+                                // Close other accordions first
                                 accordionDetails.forEach(otherDetails => {
                                     if (otherDetails !== targetAccordion && otherDetails.open) {
                                         otherDetails.open = false;
                                     }
                                 });
+                                // Open the target accordion
                                 targetAccordion.open = true;
+                                // Scroll to the accordion
                                 targetAccordion.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                         }
-                        // Otherwise, just a regular smooth scroll to a section
+                        // Regular smooth scroll for other anchor links
                         else {
                             targetElement.scrollIntoView({
                                 behavior: 'smooth',
@@ -1712,16 +1575,16 @@
             if (hash) {
                 const targetElement = document.getElementById(hash);
                 if (targetElement) {
-                    // Check if the hash matches a tab (e.g., #arabic-tab, #general-tips-tab)
+                    // Check if it's a tab
                     const initialTabButton = document.querySelector(`.tab-button[data-tab="${hash}"]`);
                     if (initialTabButton) {
-                        const parentTabsSection = initialTabButton.closest('.tabs-container');
-                        if (parentTabsSection) {
-                            activateTabInContainer(hash, parentTabsSection);
-                            parentTabsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        activateTab(hash);
+                        const tabsSection = document.getElementById('didactic-subjects-section');
+                        if (tabsSection) {
+                            tabsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }
                     } 
-                    // Check if the hash matches an accordion
+                    // Check if it's an accordion
                     else if (targetElement.tagName === 'DETAILS') {
                         targetElement.open = true;
                         targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1732,136 +1595,6 @@
                     }
                 }
             }
-
-            // --- Search Functionality ---
-            function removeHighlights() {
-                document.querySelectorAll('.highlight').forEach(span => {
-                    const parent = span.parentNode;
-                    while (span.firstChild) {
-                        parent.insertBefore(span.firstChild, span);
-                    }
-                    parent.removeChild(span);
-                    parent.normalize();
-                });
-            }
-
-            function highlightText(textNode, searchTerm) {
-                const regex = new RegExp(searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi');
-                const text = textNode.nodeValue;
-                const matches = [...text.matchAll(regex)];
-                
-                if (matches.length === 0) {
-                    return null;
-                }
-
-                const fragment = document.createDocumentFragment();
-                let lastIndex = 0;
-
-                matches.forEach(match => {
-                    if (match.index > lastIndex) {
-                        fragment.appendChild(document.createTextNode(text.substring(lastIndex, match.index)));
-                    }
-                    const span = document.createElement('span');
-                    span.className = 'highlight';
-                    span.textContent = match[0];
-                    fragment.appendChild(span);
-                    lastIndex = match.index + match[0].length;
-                });
-
-                if (lastIndex < text.length) {
-                    fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
-                }
-
-                textNode.parentNode.replaceChild(fragment, textNode);
-                return textNode.parentNode;
-            }
-
-            function traverseAndSearch(node, searchTerm) {
-                let foundInThisNode = false;
-                if (node.nodeType === Node.TEXT_NODE) {
-                    if (highlightText(node, searchTerm)) {
-                        foundInThisNode = true;
-                    }
-                } else if (node.nodeType === Node.ELEMENT_NODE) {
-                    if (node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && 
-                        node.id !== 'searchInput' && !node.classList.contains('search-container')) {
-                        let child = node.firstChild;
-                        while (child) {
-                            const nextSibling = child.nextSibling;
-                            if (traverseAndSearch(child, searchTerm)) {
-                                foundInThisNode = true;
-                            }
-                            child = nextSibling;
-                        }
-                    }
-                }
-                return foundInThisNode;
-            }
-
-            function handleSearch() {
-                removeHighlights();
-                const searchTerm = searchInput.value.trim();
-
-                if (searchTerm.length === 0) {
-                    alert('الرجاء إدخال كلمة للبحث.');
-                    return;
-                }
-
-                let firstMatchFound = false;
-                let firstMatchElement = null;
-
-                // Close all accordions and set all tabs to inactive state before searching
-                accordionDetails.forEach(detail => detail.open = false);
-                // For tabs, we reset them by deactivating buttons and contents
-                document.querySelectorAll('.tabs-container').forEach(container => {
-                    container.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-                    container.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-                });
-
-
-                document.querySelectorAll('.section-card').forEach(section => {
-                    const originalContent = section.innerHTML;
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = originalContent;
-
-                    const foundInThisSection = traverseAndSearch(tempDiv, searchTerm);
-
-                    if (foundInThisSection) {
-                        section.innerHTML = tempDiv.innerHTML;
-                        if (!firstMatchFound) {
-                            firstMatchElement = section.querySelector('.highlight');
-                            firstMatchFound = true;
-                        }
-
-                        if (section.tagName === 'DETAILS') {
-                            section.open = true;
-                        } else if (section.classList.contains('tabs-container')) {
-                            const highlightedTabContent = section.querySelector('.tab-content .highlight');
-                            if (highlightedTabContent) {
-                                const tabContentId = highlightedTabContent.closest('.tab-content').id;
-                                const tabId = tabContentId.replace('-content', '');
-                                activateTabInContainer(tabId, section); // Use the generic activateTabInContainer
-                            }
-                        }
-                    } else {
-                        section.innerHTML = originalContent;
-                    }
-                });
-
-                if (firstMatchFound && firstMatchElement) {
-                    firstMatchElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else {
-                    alert('لم يتم العثور على نتائج للبحث "' + searchTerm + '".');
-                }
-            }
-
-
-            searchButton.addEventListener('click', handleSearch);
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    handleSearch();
-                }
-            });
         });
 
         // Global functions for theme toggle and scroll to top (can be called from HTML)
